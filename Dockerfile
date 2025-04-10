@@ -1,0 +1,48 @@
+FROM alpine:latest
+
+ADD https://github.com/dunglas/frankenphp/releases/latest/download/frankenphp-linux-x86_64 /docker/
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache \
+    nodejs \
+    npm \
+    php84 \
+    php84-cli \
+    php84-fpm \
+    php84-common \
+    php84-iconv \
+    php84-ctype \
+    php84-phar \
+    php84-session \
+    php84-dom \
+    php84-intl \
+    php84-mysqli \
+    php84-json \
+    php84-pdo \
+    php84-pdo_mysql \
+    php84-pdo_odbc \
+    php84-pdo_pgsql \
+    php84-pdo_sqlite \
+    php84-pdo_dblib \
+    php84-fileinfo \
+    php84-zip \
+    php84-gd \
+    php84-mbstring \
+    php84-opcache \
+    php84-curl \
+    php84-xml \
+    php84-simplexml \
+    php84-xmlwriter \
+    php84-xmlreader \
+    php84-bcmath \
+    php84-openssl \
+    php84-tokenizer \
+    php84-pecl-redis && \
+    alias composer="php /usr/bin/composer" && \
+    chmod +x /docker/frankenphp-linux-x86_64 && \
+    mv /docker/frankenphp-linux-x86_64 /docker/frankenphp
+
+CMD [ "/docker/frankenphp","php-server","--root","/app" ]
