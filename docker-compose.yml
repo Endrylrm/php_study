@@ -12,8 +12,6 @@ services:
     restart: "unless-stopped"
     ports:
       - 8080:80
-      - 443:443
-      - 443:443/udp
     environment:
       APP_DB_CONNECTION: "mysql"
       APP_DB_HOST: "mysqldb"

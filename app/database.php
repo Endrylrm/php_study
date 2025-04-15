@@ -4,13 +4,19 @@ include("User.php");
 class DatabaseHandler
 {
     protected PDO $pdo;
+    protected array $env;
+
+    function __construct()
+    {
+        $this->env = parse_ini_file(".env");
+    }
 
     function createDBConnection()
     {
         $this->pdo = new PDO(
-            "{$_ENV["APP_DB_CONNECTION"]}:host={$_ENV["APP_DB_HOST"]};dbname={$_ENV["APP_DB_NAME"]}",
-            $_ENV["APP_DB_USER"],
-            $_ENV["APP_DB_PASSWORD"]
+            "{$this->env["APP_DB_CONNECTION"]}:host={$this->env["APP_DB_HOST"]};dbname={$this->env["APP_DB_NAME"]}",
+            $this->env["APP_DB_USER"],
+            $this->env["APP_DB_PASSWORD"]
         );
 
         return $this->pdo;

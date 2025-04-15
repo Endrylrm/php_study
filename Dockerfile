@@ -1,7 +1,5 @@
 FROM alpine:latest
 
-ADD https://github.com/dunglas/frankenphp/releases/latest/download/frankenphp-linux-x86_64 /docker/
-
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN apk update && \
@@ -41,8 +39,8 @@ RUN apk update && \
     php84-openssl \
     php84-tokenizer \
     php84-pecl-redis && \
-    alias composer="php /usr/bin/composer" && \
-    chmod +x /docker/frankenphp-linux-x86_64 && \
-    mv /docker/frankenphp-linux-x86_64 /docker/frankenphp
+    ln -s /usr/bin/php84 /usr/bin/php && \
+    ln -s /usr/sbin/php-fpm84 /usr/sbin/php-fpm && \
+    alias composer="php /usr/bin/composer"
 
-CMD [ "/docker/frankenphp","php-server","--root","/app" ]
+CMD [ "php","-S","0.0.0.0:80","-t","/app" ]
