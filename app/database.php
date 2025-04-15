@@ -3,7 +3,7 @@ include("User.php");
 
 class DatabaseHandler
 {
-    private PDO $pdo;
+    protected PDO $pdo;
 
     function createDBConnection()
     {
