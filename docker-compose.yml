@@ -12,17 +12,6 @@ services:
     restart: "unless-stopped"
     ports:
       - 8080:80
-    environment:
-      APP_DB_CONNECTION: "mysql"
-      APP_DB_HOST: "mysqldb"
-      APP_DB_PORT: 3306
-      APP_DB_NAME: "phpdevdb"
-      APP_DB_USER: "phpdev"
-      APP_DB_PASSWORD: "phpdev"
-      APP_MAILPIT_HOST: "mailpit"
-      APP_MAILPIT_PORT: 1025
-      APP_REDIS_HOST: "redis"
-      APP_REDIS_PORT: 6379
     volumes:
       # onde o aplicativo PHP irá ficar
       - ./app:/app
