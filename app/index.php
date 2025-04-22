@@ -1,6 +1,6 @@
 <?php
-include("database.php");
-include("Router.php");
+require "database.php";
+require "Router.php";
 
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 

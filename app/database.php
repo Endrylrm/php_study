@@ -1,5 +1,5 @@
 <?php
-include("User.php");
+require "User.php";
 
 class DatabaseHandler
 {

@@ -4,49 +4,38 @@ class Router
 {
     private static array $routes = [];
 
-    public static function get(string $path, Closure $callback)
+    private static function register(string $path, Closure $callback, string $method)
     {
         self::$routes[] = [
             'path'   => $path,
             'callback' => $callback,
-            'method' => 'GET'
+            'method' => $method
         ];
+    }
+
+    public static function get(string $path, Closure $callback)
+    {
+        self::register($path, $callback, "GET");
     }
 
     public static function post(string $path, Closure $callback)
     {
-        self::$routes[] = [
-            'path'   => $path,
-            'callback' => $callback,
-            'method' => 'POST'
-        ];
+        self::register($path, $callback, "POST");
     }
 
     public static function put(string $path, Closure $callback)
     {
-        self::$routes[] = [
-            'path'   => $path,
-            'callback' => $callback,
-            'method' => 'PUT'
-        ];
+        self::register($path, $callback, "PUT");
     }
 
     public static function delete(string $path, Closure $callback)
     {
-        self::$routes[] = [
-            'path'   => $path,
-            'callback' => $callback,
-            'method' => 'DELETE'
-        ];
+        self::register($path, $callback, "DELETE");
     }
 
     public static function patch(string $path, Closure $callback)
     {
-        self::$routes[] = [
-            'path'   => $path,
-            'callback' => $callback,
-            'method' => 'PATCH'
-        ];
+        self::register($path, $callback, "PATCH");
     }
 
     public static function dispatch(string $path): void
