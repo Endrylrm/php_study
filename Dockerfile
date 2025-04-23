@@ -2,9 +2,13 @@ FROM alpine:latest
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+COPY ./config/ /config
+
 RUN apk update && \
     apk upgrade && \
     apk add --no-cache \
+    supervisor \
+    nginx \
     nodejs \
     npm \
     php84 \
@@ -41,6 +45,7 @@ RUN apk update && \
     php84-pecl-redis && \
     ln -s /usr/bin/php84 /usr/bin/php && \
     ln -s /usr/sbin/php-fpm84 /usr/sbin/php-fpm && \
-    alias composer="php /usr/bin/composer"
+    alias composer="php /usr/bin/composer" && \
+    mv /config/nginx.conf /etc/nginx/http.d/default.conf
 
-CMD [ "php","-S","0.0.0.0:80","-t","/app" ]
+CMD [ "/usr/bin/supervisord", "-c", "/config/supervisord.conf" ]
