@@ -53,6 +53,6 @@ class Router
             }
         }
 
-        echo "404 - Page not found";
+        require "404.php";
     }
 }
