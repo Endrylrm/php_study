@@ -5,8 +5,10 @@ require "Router.php";
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
 Router::get("/", function () {
-    echo '<h1>Hello World!</h1>';
+    echo json_encode(["result" => "Hello World!"]);
+});
 
+Router::get("/users", function () {
     $dbHandler = new DatabaseHandler();
 
     //$dbHandler->createUser(["Teste6", "teste6@hotmail.com", 30]);
@@ -15,19 +17,55 @@ Router::get("/", function () {
 
     $users = $dbHandler->selectAllUsers();
 
-    foreach ($users as $user) {
-        echo $user->name . " " . $user->email . " " . $user->age . "<br>";
-    }
+    echo json_encode($users);
 
     $dbHandler = null;
 });
 
+Router::post("/users", function () {
+    $data = json_decode(file_get_contents('php://input'), true);
+    $result = [];
+
+    if (!isset($data["name"])) {
+        $result = ["error" => "Name not set to add a user!"];
+        echo json_encode($result);
+        return;
+    }
+
+    if (!isset($data["email"])) {
+        $result = ["error" => "Email not set to add a user!"];
+        echo json_encode($result);
+        return;
+    }
+
+    if (!isset($data["age"])) {
+        $result = ["error" => "Age not set to add a user!"];
+        echo json_encode($result);
+        return;
+    }
+
+    $dbHandler = new DatabaseHandler();
+
+    $users = $dbHandler->createUser(array_values($data));
+
+    $dbHandler = null;
+
+    $result = ["success" => "User Created successfully!"];
+    echo json_encode($result);
+});
+
+Router::put("/users", function () {
+    echo json_encode(["result" => "Test"]);
+});
+
 Router::get("/test", function () {
-    echo "test";
+    echo json_encode(["result" => "Test"]);
 });
 
 Router::get("/test/{id}", function ($id) {
-    echo "test {$id}";
+    $data = ["test {$id}"];
+    $json = json_encode($data);
+    echo $json;
 });
 
 Router::dispatch($path);

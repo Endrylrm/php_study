@@ -47,6 +47,7 @@ class Router
                 array_shift($matches);
 
                 if ($_SERVER["REQUEST_METHOD"] == $route["method"]) {
+                    header('Content-Type: application/json; charset=utf-8');
                     call_user_func_array($route["callback"], $matches);
                     return;
                 }
