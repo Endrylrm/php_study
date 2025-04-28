@@ -7,7 +7,7 @@ class UserDB extends DatabaseHandler
     function selectUser(array $request)
     {
         $sql = 'SELECT * FROM users WHERE id = ?';
-        $query = $this->pdo->prepare($sql);
+        $query = $this->getDBConnection()->prepare($sql);
         $query->execute($request);
         $user = User::fromRequest($query->fetch());
         return $user;
@@ -16,7 +16,7 @@ class UserDB extends DatabaseHandler
     function selectAllUsers()
     {
         $sql = 'SELECT * FROM users';
-        $query = $this->pdo->query($sql);
+        $query = $this->getDBConnection()->query($sql);
         $rows = $query->fetchAll();
         $users = array();
         foreach ($rows as $row) {
@@ -29,7 +29,7 @@ class UserDB extends DatabaseHandler
     function createUser(array $request)
     {
         $sql = 'INSERT INTO users(name, email, age) VALUES (?, ?, ?)';
-        $query = $this->pdo->prepare($sql);
+        $query = $this->getDBConnection()->prepare($sql);
         $query->execute($request);
         echo "Usuário criado com sucesso!";
     }
@@ -37,7 +37,7 @@ class UserDB extends DatabaseHandler
     function createMultipleUsers(array $request)
     {
         $sql = 'INSERT INTO users(name, email, age) VALUES (?, ?, ?)';
-        $query = $this->pdo->prepare($sql);
+        $query = $this->getDBConnection()->prepare($sql);
         foreach ($request as $user) {
             $query->execute($user);
         }
@@ -71,7 +71,7 @@ class UserDB extends DatabaseHandler
         $sql .= ' WHERE id = :id';
         $params[":id"] = $request["id"];
 
-        $query = $this->pdo->prepare($sql);
+        $query = $this->getDBConnection()->prepare($sql);
         $query->execute($params);
 
         if ($query->rowCount() > 0) {
@@ -84,7 +84,7 @@ class UserDB extends DatabaseHandler
     function deleteUser(array $request)
     {
         $sql = 'DELETE FROM users WHERE id = ?';
-        $query = $this->pdo->prepare($sql);
+        $query = $this->getDBConnection()->prepare($sql);
         $query->execute($request);
         echo "Usuário deletado com sucesso!";
     }
