@@ -23,24 +23,24 @@ Router::get("/users", function () {
 });
 
 Router::post("/users", function () {
-    $data = json_decode(file_get_contents('php://input'), true);
-    $result = [];
+    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $response = [];
 
     if (!isset($data["name"])) {
-        $result = ["error" => "Name not set to add a user!"];
-        echo json_encode($result);
+        $response = ["error" => "Name not set to add a user!"];
+        echo json_encode($response);
         return;
     }
 
     if (!isset($data["email"])) {
-        $result = ["error" => "Email not set to add a user!"];
-        echo json_encode($result);
+        $response = ["error" => "Email not set to add a user!"];
+        echo json_encode($response);
         return;
     }
 
     if (!isset($data["age"])) {
-        $result = ["error" => "Age not set to add a user!"];
-        echo json_encode($result);
+        $response = ["error" => "Age not set to add a user!"];
+        echo json_encode($response);
         return;
     }
 
@@ -50,12 +50,26 @@ Router::post("/users", function () {
 
     $dbHandler = null;
 
-    $result = ["success" => "User Created successfully!"];
-    echo json_encode($result);
+    $response = ["success" => "User Created successfully!"];
+    echo json_encode($response);
 });
 
 Router::put("/users", function () {
     echo json_encode(["result" => "Test"]);
+});
+
+Router::patch("/users/{id}", function ($id) {
+    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+    $data["id"] = $id;
+
+    $dbHandler = new DatabaseHandler();
+
+    $users = $dbHandler->updateUser($data);
+
+    $dbHandler = null;
+
+    $response = ["success" => true];
+    echo json_encode($response);
 });
 
 Router::get("/test", function () {
