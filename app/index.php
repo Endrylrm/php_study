@@ -58,6 +58,17 @@ Router::put("/users", function () {
     echo json_encode(["result" => "Test"]);
 });
 
+Router::delete("/users/{id}", function ($id) {
+    $dbHandler = new DatabaseHandler();
+
+    $users = $dbHandler->deleteUser([$id]);
+
+    $dbHandler = null;
+
+    $response = ["success" => true];
+    echo json_encode($response);
+});
+
 Router::patch("/users/{id}", function ($id) {
     $data = json_decode(file_get_contents('php://input'), true) ?? [];
     $data["id"] = $id;
