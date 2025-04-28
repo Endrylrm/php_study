@@ -1,1 +1,2 @@
-<h1>404 - Page not found</h1>
+<?php
+echo json_encode(["error" => "404 - route not found!"]);
