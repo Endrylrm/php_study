@@ -1,5 +1,5 @@
 <?php
-require "database.php";
+require "UserDB.php";
 require "Router.php";
 
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
@@ -9,7 +9,7 @@ Router::get("/", function () {
 });
 
 Router::get("/users", function () {
-    $dbHandler = new DatabaseHandler();
+    $dbHandler = new UserDB();
 
     //$dbHandler->createUser(["Teste6", "teste6@hotmail.com", 30]);
     //$dbHandler->createMultipleUsers([["Teste4", "teste4@hotmail.com", 30], ["Teste5", "teste5@hotmail.com", 30], ["Teste6", "teste6@hotmail.com", 30]]);
@@ -44,7 +44,7 @@ Router::post("/users", function () {
         return;
     }
 
-    $dbHandler = new DatabaseHandler();
+    $dbHandler = new UserDB();
 
     $users = $dbHandler->createUser(array_values($data));
 
@@ -59,7 +59,7 @@ Router::put("/users", function () {
 });
 
 Router::delete("/users/{id}", function ($id) {
-    $dbHandler = new DatabaseHandler();
+    $dbHandler = new UserDB();
 
     $users = $dbHandler->deleteUser([$id]);
 
@@ -73,7 +73,7 @@ Router::patch("/users/{id}", function ($id) {
     $data = json_decode(file_get_contents('php://input'), true) ?? [];
     $data["id"] = $id;
 
-    $dbHandler = new DatabaseHandler();
+    $dbHandler = new UserDB();
 
     $users = $dbHandler->updateUser($data);
 
