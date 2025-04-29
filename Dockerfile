@@ -48,4 +48,6 @@ RUN apk update && \
     alias composer="php /usr/bin/composer" && \
     mv /config/nginx.conf /etc/nginx/http.d/default.conf
 
+WORKDIR /app
+
 CMD [ "/usr/bin/supervisord", "-c", "/config/supervisord.conf" ]
