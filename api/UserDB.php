@@ -1,5 +1,5 @@
 <?php
-require "database.php";
+require "DatabaseHandler.php";
 require "User.php";
 
 //$dbHandler->createUser(["Teste6", "teste6@hotmail.com", 30]);
