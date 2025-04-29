@@ -2,6 +2,10 @@
 require "database.php";
 require "User.php";
 
+//$dbHandler->createUser(["Teste6", "teste6@hotmail.com", 30]);
+//$dbHandler->createMultipleUsers([["Teste4", "teste4@hotmail.com", 30], ["Teste5", "teste5@hotmail.com", 30], ["Teste6", "teste6@hotmail.com", 30]]);
+//$dbHandler->updateUser(["name" => "Teste6", "email" => "teste6@hotmail.com", "id" => 6]);
+
 class UserDB extends DatabaseHandler
 {
     function selectUser(array $request)
@@ -31,7 +35,6 @@ class UserDB extends DatabaseHandler
         $sql = 'INSERT INTO users(name, email, age) VALUES (?, ?, ?)';
         $query = $this->getDBConnection()->prepare($sql);
         $query->execute($request);
-        echo "Usuário criado com sucesso!";
     }
 
     function createMultipleUsers(array $request)
@@ -41,7 +44,6 @@ class UserDB extends DatabaseHandler
         foreach ($request as $user) {
             $query->execute($user);
         }
-        echo "Usuários criados com sucesso!";
     }
 
     function updateUser(array $request)
@@ -75,17 +77,16 @@ class UserDB extends DatabaseHandler
         $query->execute($params);
 
         if ($query->rowCount() > 0) {
-            echo "Usuário atualizado com sucesso!";
+            return true;
         } else {
-            echo "Nenhuma mudanças foram feitas.";
+            return false;
         }
     }
 
-    function deleteUser(array $request)
+    function deleteUser(int $request)
     {
         $sql = 'DELETE FROM users WHERE id = ?';
         $query = $this->getDBConnection()->prepare($sql);
-        $query->execute($request);
-        echo "Usuário deletado com sucesso!";
+        $query->execute([$request]);
     }
 }

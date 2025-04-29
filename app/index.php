@@ -11,10 +11,6 @@ Router::get("/", function () {
 Router::get("/users", function () {
     $dbHandler = new UserDB();
 
-    //$dbHandler->createUser(["Teste6", "teste6@hotmail.com", 30]);
-    //$dbHandler->createMultipleUsers([["Teste4", "teste4@hotmail.com", 30], ["Teste5", "teste5@hotmail.com", 30], ["Teste6", "teste6@hotmail.com", 30]]);
-    //$dbHandler->updateUser(["name" => "Teste6", "email" => "teste6@hotmail.com", "id" => 6]);
-
     $users = $dbHandler->selectAllUsers();
 
     echo json_encode($users);
@@ -46,7 +42,7 @@ Router::post("/users", function () {
 
     $dbHandler = new UserDB();
 
-    $users = $dbHandler->createUser(array_values($data));
+    $dbHandler->createUser(array_values($data));
 
     $dbHandler = null;
 
@@ -55,17 +51,37 @@ Router::post("/users", function () {
 });
 
 Router::put("/users", function () {
-    echo json_encode(["result" => "Test"]);
+    $data = json_decode(file_get_contents('php://input'), true) ?? [];
+
+    $dbHandler = new UserDB();
+
+    if (isset($data["id"])) {
+        $userUpdated = $dbHandler->updateUser($data);
+
+        $dbHandler = null;
+
+        $response = ["success" => "User Updated successfully!"];
+
+        echo json_encode($response);
+        return;
+    }
+
+    $dbHandler->createUser(array_values($data));
+
+    $dbHandler = null;
+
+    $response = ["success" => "User Created successfully!"];
+    echo json_encode($response);
 });
 
 Router::delete("/users/{id}", function ($id) {
     $dbHandler = new UserDB();
 
-    $users = $dbHandler->deleteUser([$id]);
+    $dbHandler->deleteUser($id);
 
     $dbHandler = null;
 
-    $response = ["success" => true];
+    $response = ["success" => "User deleted successfully!"];
     echo json_encode($response);
 });
 
@@ -75,11 +91,11 @@ Router::patch("/users/{id}", function ($id) {
 
     $dbHandler = new UserDB();
 
-    $users = $dbHandler->updateUser($data);
+    $userUpdated = $dbHandler->updateUser($data);
 
     $dbHandler = null;
 
-    $response = ["success" => true];
+    $response = ["success" => "User Updated successfully!"];
     echo json_encode($response);
 });
 
