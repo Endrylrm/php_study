@@ -2,17 +2,20 @@
 require "DatabaseHandler.php";
 require "User.php";
 
+//$user = $dbHandler->selectUser(5);
+//$users = $dbHandler->selectAllUsers();
 //$dbHandler->createUser(["Teste6", "teste6@hotmail.com", 30]);
 //$dbHandler->createMultipleUsers([["Teste4", "teste4@hotmail.com", 30], ["Teste5", "teste5@hotmail.com", 30], ["Teste6", "teste6@hotmail.com", 30]]);
 //$dbHandler->updateUser(["name" => "Teste6", "email" => "teste6@hotmail.com", "id" => 6]);
+//$dbHandler->deleteUser(10);
 
 class UserDB extends DatabaseHandler
 {
-    function selectUser(array $request)
+    function selectUser(int $id)
     {
         $sql = 'SELECT * FROM users WHERE id = ?';
         $query = $this->getDBConnection()->prepare($sql);
-        $query->execute($request);
+        $query->execute([$id]);
         $user = User::fromRequest($query->fetch());
         return $user;
     }
@@ -83,10 +86,10 @@ class UserDB extends DatabaseHandler
         }
     }
 
-    function deleteUser(int $request)
+    function deleteUser(int $id)
     {
         $sql = 'DELETE FROM users WHERE id = ?';
         $query = $this->getDBConnection()->prepare($sql);
-        $query->execute([$request]);
+        $query->execute([$id]);
     }
 }
