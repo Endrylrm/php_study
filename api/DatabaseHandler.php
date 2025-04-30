@@ -1,4 +1,5 @@
 <?php
+
 class DatabaseHandler
 {
     protected PDO $pdo;

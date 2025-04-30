@@ -99,14 +99,4 @@ Router::patch("/users/{id}", function ($id) {
     echo json_encode($response);
 });
 
-Router::get("/test", function () {
-    echo json_encode(["result" => "Test"]);
-});
-
-Router::get("/test/{id}", function ($id) {
-    $data = ["test {$id}"];
-    $json = json_encode($data);
-    echo $json;
-});
-
 Router::dispatch($path);
