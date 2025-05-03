@@ -15,7 +15,7 @@ class DatabaseHandler
         );
     }
 
-    function getDBConnection()
+    function getDBConnection(): PDO
     {
         return $this->pdo;
     }

@@ -38,7 +38,7 @@ class Router
         self::register($path, $callback, "PATCH");
     }
 
-    public static function dispatch(string $path): void
+    public static function dispatch(string $path)
     {
         foreach (self::$routes as $route) {
             $pattern = preg_replace("#\{\w+\}#", "([^\/]+)", $route["path"]);

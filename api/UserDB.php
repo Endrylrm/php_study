@@ -11,7 +11,7 @@ require "User.php";
 
 class UserDB extends DatabaseHandler
 {
-    function selectUser(int $id)
+    function selectUser(int $id): User
     {
         $sql = 'SELECT * FROM users WHERE id = ?';
         $query = $this->getDBConnection()->prepare($sql);
@@ -20,7 +20,7 @@ class UserDB extends DatabaseHandler
         return $user;
     }
 
-    function selectAllUsers()
+    function selectAllUsers(): array
     {
         $sql = 'SELECT * FROM users';
         $query = $this->getDBConnection()->query($sql);
@@ -49,11 +49,11 @@ class UserDB extends DatabaseHandler
         }
     }
 
-    function updateUser(array $request)
+    function updateUser(array $request): bool
     {
         if (!isset($request["id"])) {
             echo "ID está vazio, não é possível atualizar usuário!!!!";
-            return;
+            return false;
         }
 
         $sql = 'UPDATE users SET ';

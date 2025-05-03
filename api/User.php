@@ -15,7 +15,7 @@ class User
         $this->age = $age;
     }
 
-    public static function fromRequest(array $request)
+    public static function fromRequest(array $request): User
     {
         $user = new User(
             $request["id"],
