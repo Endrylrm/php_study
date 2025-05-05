@@ -4,18 +4,18 @@ require "Router.php";
 
 $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
+$dbHandler = new UserDB();
+
 Router::get("/", function () {
     echo json_encode(["result" => "Hello World!"]);
 });
 
 Router::get("/users", function () {
-    $dbHandler = new UserDB();
+    global $dbHandler;
 
     $users = $dbHandler->selectAllUsers();
 
     echo json_encode($users);
-
-    $dbHandler = null;
 });
 
 Router::post("/users", function () {
@@ -40,11 +40,9 @@ Router::post("/users", function () {
         return;
     }
 
-    $dbHandler = new UserDB();
+    global $dbHandler;
 
     $dbHandler->createUser(array_values($data));
-
-    $dbHandler = null;
 
     $response = ["success" => "User Created successfully!"];
     echo json_encode($response);
@@ -53,12 +51,10 @@ Router::post("/users", function () {
 Router::put("/users", function () {
     $data = json_decode(file_get_contents('php://input'), true) ?? [];
 
-    $dbHandler = new UserDB();
+    global $dbHandler;
 
     if (isset($data["id"])) {
         $userUpdated = $dbHandler->updateUser($data);
-
-        $dbHandler = null;
 
         $response = ["success" => "User Updated successfully!"];
 
@@ -68,18 +64,14 @@ Router::put("/users", function () {
 
     $dbHandler->createUser(array_values($data));
 
-    $dbHandler = null;
-
     $response = ["success" => "User Created successfully!"];
     echo json_encode($response);
 });
 
 Router::delete("/users/{id}", function ($id) {
-    $dbHandler = new UserDB();
+    global $dbHandler;
 
     $dbHandler->deleteUser($id);
-
-    $dbHandler = null;
 
     $response = ["success" => "User deleted successfully!"];
     echo json_encode($response);
@@ -89,14 +81,15 @@ Router::patch("/users/{id}", function ($id) {
     $data = json_decode(file_get_contents('php://input'), true) ?? [];
     $data["id"] = $id;
 
-    $dbHandler = new UserDB();
+    global $dbHandler;
 
     $userUpdated = $dbHandler->updateUser($data);
-
-    $dbHandler = null;
 
     $response = ["success" => "User Updated successfully!"];
     echo json_encode($response);
 });
 
 Router::dispatch($path);
+
+// not necessary anymore
+$dbHandler = null;
