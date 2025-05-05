@@ -18,6 +18,14 @@ Router::get("/users", function () {
     echo json_encode($users);
 });
 
+Router::get("/users/{id}", function ($id) {
+    global $dbHandler;
+
+    $user = $dbHandler->selectUser($id);
+
+    echo json_encode($user);
+});
+
 Router::post("/users", function () {
     $data = json_decode(file_get_contents('php://input'), true) ?? [];
     $response = [];
