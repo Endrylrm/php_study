@@ -1,6 +1,6 @@
 <?php
-require "DatabaseHandler.php";
-require "User.php";
+require_once "DatabaseHandler.php";
+require_once "User.php";
 
 //$user = $dbHandler->selectUser(5);
 //$users = $dbHandler->selectAllUsers();
