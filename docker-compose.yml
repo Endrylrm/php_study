@@ -14,7 +14,7 @@ services:
       - 8080:80
     volumes:
       # onde o aplicativo PHP irá ficar
-      - ./api:/app
+      - ./study:/app
     networks:
       - phpdev-network
   # Banco de Dados - MySQL
