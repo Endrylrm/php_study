@@ -3,22 +3,22 @@ require_once "Game.php";
 
 class FizzBuzz extends Game
 {
-    protected function rules(mixed $args = 0)
+    protected function rules(mixed $num = 0)
     {
-        if ($args % 15 == 0) {
+        if ($num % 15 == 0) {
             return "Fizz Buzz";
-        } else if ($args % 5 == 0) {
+        } else if ($num % 5 == 0) {
             return "Buzz";
-        } else if ($args % 3 == 0) {
+        } else if ($num % 3 == 0) {
             return "Fizz";
         } else {
-            return $args;
+            return $num;
         }
     }
 
-    public function start(mixed $args = 100)
+    public function start(mixed $num = 100)
     {
-        for ($i = 1; $i < $args; $i++) {
+        for ($i = 1; $i < $num; $i++) {
             echo $this->rules($i);
             echo "<br>";
         }

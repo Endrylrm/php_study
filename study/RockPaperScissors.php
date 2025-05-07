@@ -23,8 +23,8 @@ class RockPaperScissors extends Game
         return $result;
     }
 
-    public function start(mixed $args = self::PAPER)
+    public function start(mixed $playerHand = self::PAPER)
     {
-        echo $this->rules($args, rand(0, 2));
+        echo $this->rules($playerHand, rand(0, 2));
     }
 }
