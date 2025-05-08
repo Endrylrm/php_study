@@ -2,7 +2,7 @@ FROM alpine:latest
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-COPY ./config/ /config
+COPY ./docker-entrypoint.sh /docker/
 
 RUN apk update && \
     apk upgrade && \
@@ -46,8 +46,10 @@ RUN apk update && \
     ln -s /usr/bin/php84 /usr/bin/php && \
     ln -s /usr/sbin/php-fpm84 /usr/sbin/php-fpm && \
     alias composer="php /usr/bin/composer" && \
-    mv /config/nginx.conf /etc/nginx/http.d/default.conf
+    chmod +x /docker/docker-entrypoint.sh
 
 WORKDIR /app
+
+ENTRYPOINT [ "/docker/docker-entrypoint.sh" ]
 
 CMD [ "/usr/bin/supervisord", "-c", "/config/supervisord.conf" ]
