@@ -73,5 +73,5 @@ echo "$SupervisordConfig" > /config/supervisord.conf
 
 mv /config/nginx.conf /etc/nginx/http.d/default.conf
 
-# executar o comando principal do container
+# execute the container command
 exec "$@"
