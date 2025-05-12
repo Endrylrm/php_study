@@ -7,4 +7,4 @@ $fizzBuzz = new FizzBuzz();
 $fizzBuzz->start();
 
 $rockPaperScissors = new RockPaperScissors();
-$rockPaperScissors->start($rockPaperScissors::ROCK);
+$rockPaperScissors->start(HandsRPC::ROCK);
