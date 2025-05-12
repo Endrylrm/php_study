@@ -27,7 +27,7 @@ class RockPaperScissors extends Game
             $hands["Player"] === HandsRPC::PAPER && $hands["Enemy"] === HandsRPC::SCISSORS => "Enemy wins with Scissors",
             $hands["Player"] === HandsRPC::SCISSORS && $hands["Enemy"] === HandsRPC::PAPER => "Player wins with Scissors",
             $hands["Player"] === HandsRPC::SCISSORS && $hands["Enemy"] === HandsRPC::ROCK => "Enemy wins with Rock",
-            default => "Unable to decide!"
+            default => "Unable to match Hands, please use a hand type that exist!"
         };
 
         return $result;
