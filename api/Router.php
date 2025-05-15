@@ -46,11 +46,16 @@ class Router
             if (preg_match("#^$pattern$#", $path, $matches)) {
                 array_shift($matches);
 
-                if ($_SERVER["REQUEST_METHOD"] == $route["method"]) {
+                if ($_SERVER["REQUEST_METHOD"] != $route["method"]) {
+                    http_response_code(405);
                     header('Content-Type: application/json; charset=utf-8');
-                    call_user_func_array($route["callback"], $matches);
+                    echo json_encode(["error" => "405 - method not allowed!"]);
                     return;
                 }
+
+                header('Content-Type: application/json; charset=utf-8');
+                call_user_func_array($route["callback"], $matches);
+                return;
             }
         }
 
