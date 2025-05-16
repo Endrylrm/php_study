@@ -4,6 +4,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY ./docker-entrypoint.sh /docker/
 
+ENV PATH="$PATH:/root/.composer/vendor/bin"
+
 RUN apk update && \
     apk upgrade && \
     apk add --no-cache \
