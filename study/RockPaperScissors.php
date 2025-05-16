@@ -7,7 +7,7 @@ enum HandsRPC
     case PAPER;
     case SCISSORS;
 
-    public static function random(): self
+    public static function getRandomHand(): self
     {
         $length = count(self::cases()) - 1;
 
@@ -35,6 +35,6 @@ class RockPaperScissors extends Game
 
     public function start(mixed $playerHand = HandsRPC::PAPER)
     {
-        echo $this->rules(["Player" => $playerHand, "Enemy" => HandsRPC::random()]);
+        echo $this->rules(["Player" => $playerHand, "Enemy" => HandsRPC::getRandomHand()]);
     }
 }
