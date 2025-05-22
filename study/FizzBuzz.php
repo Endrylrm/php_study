@@ -5,12 +5,14 @@ class FizzBuzz extends Game
 {
     protected function rules(mixed $num = 0)
     {
-        return match (true) {
+        $result = match (true) {
             $num % 15 == 0 => "Fizz Buzz",
             $num % 5 == 0 => "Buzz",
             $num % 3 == 0 => "Fizz",
             default => $num,
         };
+
+        return $result;
     }
 
     public function start(mixed $num = 100)
