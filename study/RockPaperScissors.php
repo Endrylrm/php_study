@@ -33,7 +33,7 @@ class RockPaperScissors extends Game
         return $result;
     }
 
-    public function start(mixed $playerHand = HandsRPC::PAPER)
+    public function start(mixed $playerHand = HandsRPC::ROCK)
     {
         echo $this->rules(["Player" => $playerHand, "Enemy" => HandsRPC::getRandomHand()]);
     }
